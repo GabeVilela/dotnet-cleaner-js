@@ -20,6 +20,9 @@ const main = async () => {
 
     const folders = await globSearch(path, false, foldersToFind);
     let matches:string[] = []
+    console.debug("All matched folders", folders);
+    console.info(`Matched ${folders.length} items. Validating...`);
+    
     for (const folder of folders) {
         const parentPath = getParentPath(folder);
         if (folder.endsWith('bin')) {
@@ -28,6 +31,8 @@ const main = async () => {
             if (objPath != null && matches.length > 1) {
                 await deleteFolder(folder);
                 await deleteFolder(objPath);
+            } else{
+                console.info(`Keeping ${folder} because it doesn't have a sibling .csproj file AND/OR obj folder`);
             }
 
             continue;
@@ -38,6 +43,8 @@ const main = async () => {
             await deleteFolder(folder);
         }
     }
+    
+    console.info("Done!");
 };
 
 await main();
