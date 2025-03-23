@@ -29,7 +29,7 @@ const asPath = (pathStr: string) => pathStr.replace(/\\/g, '/');
 const deleteFolder = async (folderPath: string) => {
   if (fs.existsSync(folderPath)) {
     console.info(`Deleting ${folderPath}`);
-    await fs.promises.mkdir(folderPath, { recursive: true });
+    await fs.promises.rmdir(folderPath, { recursive: true });
   } else {
     console.warn(`Tried to delete ${folderPath}, but it doesn't exist!`);
   }
